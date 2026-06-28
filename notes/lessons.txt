@@ -1,0 +1,181 @@
+python:
+lesson 1 was about:(easy)
+variables
+print
+type(variable)
+numbers and arithmetic
+built in functions like(max,min,abs)
+and finally converting arguments to the corresponding type
+
+lesson 2 was about:(easy)
+the help function which is useful to learn more about other functions
+then how to define your own function and how to use docstrings to describe your function
+
+lesson 3 was about:
+booleans and the (or,and,not)
+conditions(if,elif,else)
+the lesson was easy the exercice were easy until the final exercice
+which is optional ,it was about black jack and it was hard i couldnt understadn it at all
+
+lesson 4 was about:(easy)
+lists and how a list can have multiple type of variables
+indexing and slicing 
+change a list
+list functions like (len, sorted,sum,max and min,)
+methodes like(append,pop,index)
+tuples who are like lists but diffre from creating them and that hey
+cant be modified
+lesson 5 was about:(easy)
+loops(for x in xx)or (for x in range(n))
+while loops
+list comprehension(square=[n**2 for n in range(10)])
+
+lesson 6 was about:(one exercice was kinda hard)
+
+strings and how we can do to them what we did to lists
+aboout indexing slicing..
+methods like(split:that gives a list of the splited string
+join:that joins into one string example(/'.join([month, day, year]))
+)
+isdigit()
+dictionaries:
+dict.keys() and dict.values()
+dict.items() example:
+for planet, initial in planet_to_initial.items():
+    print("{} begins with \"{}\"".format(planet.rjust(10), initial))
+
+for the exercice in this lesson one was hard for me i did it by looking for hints but i know my code isnt perfect like theirs i send you pictures of the exercice 
+
+lesson 7 was about
+working with external libraries
+idk why in this lesson in exercice they were about matplotlib 
+even tho we still didnt see them  but it s fine
+
+pandas:
+lesson 1 was about:
+dataframe and series
+how to creata a dataframe and serie and assign indexes
+how to read a csv file(pd.read_csv("",index_col=0))
+how to save a data as a csv (to_csv)
+
+lesson 2 was about:
+Indexing, Selecting & Assigning
+indexing using loc and iloc
+to select the frst row of data we use(.iloc[0])
+we can use iloc[:3,0] to select 3 rows and one column
+loc is for label based selection we can do:
+.loc[0,'column name']
+diffrence is iloc[0:10] will show from 0 to 9 loc will show from 0 to 10
+and we can use string indexes in loc
+manipulating the index:
+to come up with better index for data we use(.set_index(""))
+-conditional selection
+example:reviews.country=='Italy'
+then we can use it into loc:loc.[reviews.country=='Italy'] to see all rows and collums where country is italy
+and is & or is | 
+pandas built in conditional selectors:
+isin(.loc[reviews.contry.isin(['italy','france'])]
+isnull and notnull(.loc[reviews.price.isnull()])
+assign data:
+reviews['critic']='everyone'
+
+lesson 3 was about:
+Summary Functions and Maps
+-summary functions:
+   describe(reviews.points.describe())
+   mean(reviews.points.mean())
+   unique(reviews.taster_name.unique())
+   value_counts(reviews.taster_name.value_counts()) this is like unique+frequence of the unique values
+-maps
+map()
+review_points_mean=reviews.points.mean()
+reviews.points.map(lambda p:p-review_points_mean)
+apply is the same but for the whole dataframe instead of series
+def remean_points(row):
+	row.points=row.points-review_point_mean
+	return row
+reviews.apply(remean_points,axis='columns')
+both map and apply give a new series and dataframes they dont change the original
+in the exercice this one was hard
+I'm an economical wine buyer. Which wine is the "best bargain"? Create a variable bargain_wine with the title of the wine with the highest points-to-price ratio in the dataset.
+because first i didnt understand what points to price ratio means andn ididnt know idxmax 
+now i know i 
+idxmax gives the index of the max value
+question:here def star(row):
+    if row.points >=95 or row.country == "Canada":
+        return 3
+    elif row.points>=85:
+        return 2
+    else:
+        return 1
+    
+star_ratings = reviews.apply(star,axis='columns')
+
+evenn tho apply is for the whole dataframe but because i used return in def it will give a series instead of a dataframe
+because me i did it like this:
+def star(row):
+    if row.points >=95 or row.country == "Canada":
+        row.points=3
+    elif row.points>=85:
+        row.points=2
+    else:
+        row.points=1
+    return row
+star_ratings = reviews.apply(star,axis='columns').points
+
+# Check your answer
+q7.check()
+
+lesson 4 was about:
+grouping and sorting
+groupby 
+we can do value_counts using groupby
+example:reviews.groupby('points').price.min()
+        this group us the unique points then for each point it give the min price in that point
+we can group by more than one
+reviews.groupby(['country','province']).apply(lambda df:df.loc[df.points.idxmax()])
+methode agg that let you run more functions
+reviews.groupby(['country']).price.agg([len,min,max])
+-multi-indexes
+you can resest the index to one by using reset_index()
+-sorting
+to sort the data how u want it we use sort_values(by='..',ascending=False/True)
+we can sort by indexes using sort_index()
+we can also sort by more than colum in the sort_values
+
+lesson 5 was about:
+data type and missing values
+dtype to get type of a column:
+reviews.price.dtype
+dtypes for every column in dataframe reviews.dtypes
+
+we can change type of column by using astypes
+-missingg data
+use isnull or notnull to select
+to replace NaN with a value we use fillna()
+or to replace a value we can use .replace('old','new')
+in an exercie the correction was:reviews_per_region = reviews.region_1.fillna('Unknown').value_counts().sort_values(ascending=False)
+and i did:reviews.region_1.fillna('Unknown')
+reviews_per_region = reviews.groupby('region_1').size().sort_values(ascending=False) 
+whch one is better?
+lesson 6 was about :
+renaming and combining
+to change the name of index or column we use rename
+reviews.rename(columns={'old':'new'})
+reviews.rename(index={0:'first',1:'second'})
+to name the indexes and columns we use
+reviews.rename_axis('wines',axis='rows').rename_axis('fields',axis='columns')
+-combining
+concat() used to merge 2 datasets that have the same colmns
+pd.concat([data1,data2])
+join()to join data that has the same index
+data1.join(data2,lsuffix='',rsuffix='')
+lsuffix and rsuffix if they have the same columns name
+
+
+
+
+
+
+
+
